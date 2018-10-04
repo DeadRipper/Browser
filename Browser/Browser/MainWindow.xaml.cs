@@ -29,7 +29,7 @@ namespace Browser
 
         private bool IsUrlValid(string url)
         {
-            string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^(.com|.ua|.ru|)";
+            string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
             Regex regex = new Regex(reg, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return regex.IsMatch(txtUrl.Text);
         }
@@ -40,7 +40,6 @@ namespace Browser
             {
                 if (e.Key == Key.Enter)
                 {
-                    //wbSample.Navigate("http://" + txtUrl.Text + ".com");
                     if (IsUrlValid(txtUrl.Text) == true)
                     {
                         wbSample.Navigate(txtUrl.Text);
