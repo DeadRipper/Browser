@@ -15,8 +15,8 @@
     </Window.CommandBindings>
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-            <Button Command="NavigationCommands.BrowseBack"></Button>
-            <Button Command="NavigationCommands.BrowseForward"></Button>
+            <Button Command="NavigationCommands.BrowseBack" Content="--" ></Button>
+            <Button Command="NavigationCommands.BrowseForward" Content="++" ></Button>
             <Separator />
             <TextBox Name="txtUrl" Width="300" KeyUp="txtUrl_KeyUp" />
             <Button Command="NavigationCommands.GoToPage"></Button>

@@ -41,13 +41,9 @@ namespace Browser
                 if (e.Key == Key.Enter)
                 {
                     if (IsUrlValid(txtUrl.Text) == true)
-                    {
                         wbSample.Navigate(txtUrl.Text);
-                    }
                     else
-                    {
                         wbSample.Navigate("http://" + txtUrl.Text + ".com");
-                    }
                 }
             }
             catch(Exception ex)
