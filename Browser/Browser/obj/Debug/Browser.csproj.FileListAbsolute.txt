@@ -13,3 +13,5 @@ C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.csproj.GenerateRes
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.csproj.CoreCompileInputs.cache
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.exe
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.pdb
+C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\History.g.cs
+C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\History.baml

@@ -27,6 +27,8 @@ namespace Browser
             wbSample.Navigate("http://www.google.com");
         }
 
+        History wHistory = new History();
+
         private bool IsUrlValid(string url)
         {
             string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
@@ -34,16 +36,23 @@ namespace Browser
             return regex.IsMatch(txtUrl.Text);
         }
 
-        private void txtUrl_KeyUp(object sender, KeyEventArgs e)
+        public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
             try
             {
                 if (e.Key == Key.Enter)
                 {
                     if (IsUrlValid(txtUrl.Text) == true)
+                    {
                         wbSample.Navigate(txtUrl.Text);
+                        wHistory.AddItem();
+                    }
+
                     else
+                    {
                         wbSample.Navigate("http://" + txtUrl.Text + ".com");
+                        wHistory.AddItem();
+                    }
                 }
             }
             catch(Exception ex)
@@ -87,5 +96,9 @@ namespace Browser
             wbSample.Navigate(txtUrl.Text);
         }
 
+        private void story_button_Click(object sender, RoutedEventArgs e)
+        {
+            wHistory.Show();
+        }
     }
 }
