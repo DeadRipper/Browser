@@ -24,11 +24,12 @@ namespace Browser
             InitializeComponent();
         }
 
-        MainWindow window = new MainWindow();
+        //MainWindow window = new MainWindow();
 
         public void AddItem()
         {
-            Listbox.Items.Add(window.txtUrl.Text);
+            List<string> list = new List<string>();
+            list.Add(window.txtUrl.Text);
         }
     }
 }

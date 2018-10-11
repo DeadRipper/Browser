@@ -25,6 +25,6 @@
             <Button x:Name="story_button" Height="26" VerticalAlignment="Top" Width="43" Content="Story" Click="story_button_Click"></Button>
 
         </ToolBar>
-        <WebBrowser Name="wbSample" Navigating="wbSample_Navigating"></WebBrowser>
+        <WebBrowser Name="wbProg" Navigating="wbProg_Navigating"></WebBrowser>
     </DockPanel>
 </Window>

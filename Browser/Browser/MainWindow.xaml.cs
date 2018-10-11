@@ -24,7 +24,7 @@ namespace Browser
         public MainWindow()
         {
             InitializeComponent();
-            wbSample.Navigate("http://www.google.com");
+            wbProg.Navigate("http://www.google.com");
         }
 
         History wHistory = new History();
@@ -44,13 +44,13 @@ namespace Browser
                 {
                     if (IsUrlValid(txtUrl.Text) == true)
                     {
-                        wbSample.Navigate(txtUrl.Text);
+                        wbProg.Navigate(txtUrl.Text);
                         wHistory.AddItem();
                     }
 
                     else
                     {
-                        wbSample.Navigate("http://" + txtUrl.Text + ".com");
+                        wbProg.Navigate("http://" + txtUrl.Text + ".com");
                         wHistory.AddItem();
                     }
                 }
@@ -61,29 +61,29 @@ namespace Browser
             }
         }
 
-        private void wbSample_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        private void wbProg_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
             txtUrl.Text = e.Uri.OriginalString;
         }
 
         private void BrowseBack_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = ((wbSample != null) && (wbSample.CanGoBack));
+            e.CanExecute = ((wbProg != null) && (wbProg.CanGoBack));
         }
 
         private void BrowseBack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            wbSample.GoBack();
+            wbProg.GoBack();
         }
 
         private void BrowseForward_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = ((wbSample != null) && (wbSample.CanGoForward));
+            e.CanExecute = ((wbProg != null) && (wbProg.CanGoForward));
         }
 
         private void BrowseForward_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            wbSample.GoForward();
+            wbProg.GoForward();
         }
 
         private void GoToPage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -93,7 +93,7 @@ namespace Browser
 
         private void GoToPage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            wbSample.Navigate(txtUrl.Text);
+            wbProg.Navigate(txtUrl.Text);
         }
 
         private void story_button_Click(object sender, RoutedEventArgs e)
