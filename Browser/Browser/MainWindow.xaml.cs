@@ -27,7 +27,7 @@ namespace Browser
             wbProg.Navigate("http://www.google.com");
         }
 
-        History wHistory = new History();
+        
 
         private bool IsUrlValid(string url)
         {
@@ -38,6 +38,7 @@ namespace Browser
 
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
+            History wHistory = new History();
             try
             {
                 if (e.Key == Key.Enter)
@@ -45,13 +46,13 @@ namespace Browser
                     if (IsUrlValid(txtUrl.Text) == true)
                     {
                         wbProg.Navigate(txtUrl.Text);
-                        wHistory.AddItem();
+                        wHistory.storytextbox.Text = txtUrl.Text;
+                        wHistory.storytextbox.Visibility = Visibility.Visible;
                     }
 
                     else
                     {
                         wbProg.Navigate("http://" + txtUrl.Text + ".com");
-                        wHistory.AddItem();
                     }
                 }
             }
@@ -98,6 +99,7 @@ namespace Browser
 
         private void story_button_Click(object sender, RoutedEventArgs e)
         {
+            History wHistory = new History();
             wHistory.Show();
         }
     }

@@ -9,6 +9,7 @@
         Height="{Binding SystemParameters.PrimaryScreenheight}" 
         Width="{Binding SystemParameters.PrimaryScreenheight}">
     <Grid Margin="0,3,0,0" Height="498" VerticalAlignment="Top">
-        <ListBox x:Name="Listbox" HorizontalAlignment="Left" Height="478" Margin="10,10,0,0" VerticalAlignment="Top" Width="740"/>
+        <TextBox x:Name="storytextbox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="storytextbox_TextChanged"/>
+
     </Grid>
 </Window>
