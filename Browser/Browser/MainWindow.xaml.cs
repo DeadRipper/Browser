@@ -27,8 +27,6 @@ namespace Browser
             wbProg.Navigate("http://www.google.com");
         }
 
-        
-
         private bool IsUrlValid(string url)
         {
             string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
@@ -39,27 +37,20 @@ namespace Browser
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
             History wHistory = new History();
-            try
+            if (e.Key == Key.Enter)
             {
-                if (e.Key == Key.Enter)
+                if (IsUrlValid(txtUrl.Text) == true)
                 {
-                    if (IsUrlValid(txtUrl.Text) == true)
-                    {
-                        wbProg.Navigate(txtUrl.Text);
-                        wHistory.storytextbox.Text = txtUrl.Text;
-                        wHistory.storytextbox.Visibility = Visibility.Visible;
-                    }
-
-                    else
-                    {
-                        wbProg.Navigate("http://" + txtUrl.Text + ".com");
-                    }
+                    wbProg.Navigate(txtUrl.Text);
+                    wHistory.storytextbox.Text = txtUrl.Text;
+                    wHistory.storytextbox.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    wbProg.Navigate("http://" + txtUrl.Text + ".com");
                 }
             }
-            catch(Exception ex)
-            {
-                
-            }
+
         }
 
         private void wbProg_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)

@@ -24,18 +24,6 @@ namespace Browser
             InitializeComponent();
         }
 
-        public void Add()
-        {
-            //MainWindow main = new MainWindow();
-            //List<string> list = new List<string>();
-            //list.Add(main.txtUrl.Text);
-            //foreach (var VARIABLE in list)
-            //{
-            //    storytextbox.Text.ToString();
-            //    storytextbox.Visibility = Visibility.Visible;
-            //}
-        }
-
         private void storytextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MainWindow window = new MainWindow();
