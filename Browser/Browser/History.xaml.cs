@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,13 +25,10 @@ namespace Browser
             InitializeComponent();
         }
 
-        private void storytextbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void listbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainWindow window = new MainWindow();
-            if (storytextbox.Text.Equals(window.txtUrl))
-                storytextbox.Visibility = Visibility.Visible;
-            else
-                storytextbox.Visibility = Visibility.Hidden;
+            MainWindow wMain = new MainWindow();
+            listbox.SelectedItems.ToString();
         }
     }
 }

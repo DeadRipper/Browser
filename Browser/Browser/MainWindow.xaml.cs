@@ -42,12 +42,14 @@ namespace Browser
                 if (IsUrlValid(txtUrl.Text) == true)
                 {
                     wbProg.Navigate(txtUrl.Text);
-                    wHistory.storytextbox.Text = txtUrl.Text;
-                    wHistory.storytextbox.Visibility = Visibility.Visible;
+                    txtUrlcombo.Items.Add(txtUrl.Text);
+                    wHistory.listbox.Items.Add(txtUrl.Text);
                 }
                 else
                 {
                     wbProg.Navigate("http://" + txtUrl.Text + ".com");
+                    txtUrlcombo.Items.Add(txtUrl.Text);
+                    wHistory.listbox.Items.Add(txtUrl.Text);
                 }
             }
 
