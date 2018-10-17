@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Xml.XmlConfiguration;
 
 namespace Browser
 {
@@ -44,12 +47,14 @@ namespace Browser
                     wbProg.Navigate(txtUrl.Text);
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
+                    XmlStory(txtUrl.Text.ToString());
                 }
                 else
                 {
                     wbProg.Navigate("http://" + txtUrl.Text + ".com");
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
+                    XmlStory(txtUrl.Text.ToString());
                 }
             }
 
@@ -94,6 +99,26 @@ namespace Browser
         {
             History wHistory = new History();
             wHistory.Show();
+        }
+
+        public void XmlStory(string val)
+        {
+            string path = "I:\\";
+            using (XmlTextWriter writer1 = new XmlTextWriter(path, null))
+            {
+                XmlDocument xmldoc = new XmlDocument();
+                XmlWriter xml = XmlWriter.Create("Story.xml");
+                xml.WriteStartDocument();
+                xml.WriteStartElement("story");
+                xml.WriteStartElement("today");
+                xml.WriteAttributeString("date", DateTime.Now.ToString());
+                xml.WriteString(txtUrl.Text.ToString());
+                xml.WriteEndElement();
+                xml.WriteEndDocument();
+                xml.Close();
+                writer1.Formatting = Formatting.Indented;
+                xmldoc.Save(writer1);
+            }
         }
     }
 }
