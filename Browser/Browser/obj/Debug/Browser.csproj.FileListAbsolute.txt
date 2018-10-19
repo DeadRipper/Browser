@@ -15,3 +15,8 @@ C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.exe
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.pdb
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\History.g.cs
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\History.baml
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\Google.Protobuf.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\Google.Protobuf.xml
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.xml
+C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.csproj.CopyComplete

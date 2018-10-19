@@ -13,15 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Xml.XmlConfiguration;
+using System.Windows.Media.Animation;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace Browser
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    [Serializable]
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -30,11 +31,28 @@ namespace Browser
             wbProg.Navigate("http://www.google.com");
         }
 
+        public void Conn(string str)
+        {
+            str = txtUrl.Text.ToString();
+            string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=browser;";
+            MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            using(MySqlCommand cmd = new MySqlCommand())
+            {
+                cmd.CommandText = string.Format("insert into story_list.story(name,time) values({0},{1})", str,DateTime.Now);
+                conn.Open();
+                cmd.ExecuteReader();
+                cmd.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+
         private bool IsUrlValid(string url)
         {
+            url = txtUrl.Text.ToString();
             string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
             Regex regex = new Regex(reg, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            return regex.IsMatch(txtUrl.Text);
+            return regex.IsMatch(url);
         }
 
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
@@ -47,14 +65,16 @@ namespace Browser
                     wbProg.Navigate(txtUrl.Text);
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
-                    XmlStory(txtUrl.Text.ToString());
+                    Conn(txtUrl.Text.ToString());
+                    //XmlStory(txtUrl.Text.ToString());
                 }
                 else
                 {
                     wbProg.Navigate("http://" + txtUrl.Text + ".com");
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
-                    XmlStory(txtUrl.Text.ToString());
+                    Conn(txtUrl.Text.ToString());
+                    //XmlStory(txtUrl.Text.ToString());
                 }
             }
 
@@ -101,24 +121,29 @@ namespace Browser
             wHistory.Show();
         }
 
-        public void XmlStory(string val)
-        {
-            string path = "I:\\";
-            using (XmlTextWriter writer1 = new XmlTextWriter(path, null))
-            {
-                XmlDocument xmldoc = new XmlDocument();
-                XmlWriter xml = XmlWriter.Create("Story.xml");
-                xml.WriteStartDocument();
-                xml.WriteStartElement("story");
-                xml.WriteStartElement("today");
-                xml.WriteAttributeString("date", DateTime.Now.ToString());
-                xml.WriteString(txtUrl.Text.ToString());
-                xml.WriteEndElement();
-                xml.WriteEndDocument();
-                xml.Close();
-                writer1.Formatting = Formatting.Indented;
-                xmldoc.Save(writer1);
-            }
-        }
+        //public void XmlStory(string val)
+        //{
+        //    string path = "I:\\";
+        //    using (XmlTextWriter writer1 = new XmlTextWriter(path, null))
+        //    {
+        //        XmlDocument xmldoc = new XmlDocument();
+        //        XmlWriter xml = XmlWriter.Create("Story.xml");
+        //        xml.WriteStartDocument();
+        //        xml.WriteStartElement("story");
+        //        xml.WriteStartElement("today");
+        //        xml.WriteAttributeString("date", DateTime.Now.ToString());
+        //        xml.WriteString(txtUrl.Text.ToString());
+        //        xml.WriteEndElement();
+        //        xml.WriteEndDocument();
+        //        xml.Close();
+        //        writer1.Formatting = Formatting.Indented;
+        //        xmldoc.Save(writer1);
+        //    }
+        //    XmlSerializer formatter = new XmlSerializer(typeof(MainWindow));
+        //    using (FileStream fs = new FileStream("Story.xml", FileMode.OpenOrCreate))
+        //    {
+        //        formatter.Serialize(fs, txtUrl);
+        //    }
+        //}
     }
 }
