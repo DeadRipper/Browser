@@ -34,12 +34,12 @@ namespace Browser
         public void Conn(string str)
         {
             str = txtUrl.Text.ToString();
-            string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=browser;";
+            string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
             MySqlConnection conn = new MySqlConnection(ConnectionString);
-            using(MySqlCommand cmd = new MySqlCommand())
+            using (MySqlCommand cmd = new MySqlCommand(ConnectionString, conn))
             {
-                cmd.CommandText = string.Format("insert into story_list.story(name,time) values({0},{1})", str,DateTime.Now);
+                cmd.CommandText = string.Format("insert into story_list.story(name,time) values({0},{1})", str,DateTime.Now.ToString());
                 conn.Open();
                 cmd.ExecuteReader();
                 cmd.ExecuteNonQuery();
