@@ -34,15 +34,15 @@ namespace Browser
         public void Conn(string str)
         {
             str = txtUrl.Text.ToString();
+            var date = DateTime.Now;
             string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             using (MySqlCommand cmd = new MySqlCommand(ConnectionString, conn))
             {
-                cmd.CommandText = string.Format("insert into story_list.story(name,time) values({0},{1})", str,DateTime.Now.ToString());
                 conn.Open();
                 cmd.ExecuteReader();
-                cmd.ExecuteNonQuery();
+                cmd.CommandText = string.Format("insert into story_list.story(name,time) values('{0}','{1}')", str, date);
             }
             conn.Close();
         }
@@ -66,7 +66,6 @@ namespace Browser
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
                     Conn(txtUrl.Text.ToString());
-                    //XmlStory(txtUrl.Text.ToString());
                 }
                 else
                 {
@@ -74,7 +73,6 @@ namespace Browser
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
                     Conn(txtUrl.Text.ToString());
-                    //XmlStory(txtUrl.Text.ToString());
                 }
             }
 
@@ -120,30 +118,5 @@ namespace Browser
             History wHistory = new History();
             wHistory.Show();
         }
-
-        //public void XmlStory(string val)
-        //{
-        //    string path = "I:\\";
-        //    using (XmlTextWriter writer1 = new XmlTextWriter(path, null))
-        //    {
-        //        XmlDocument xmldoc = new XmlDocument();
-        //        XmlWriter xml = XmlWriter.Create("Story.xml");
-        //        xml.WriteStartDocument();
-        //        xml.WriteStartElement("story");
-        //        xml.WriteStartElement("today");
-        //        xml.WriteAttributeString("date", DateTime.Now.ToString());
-        //        xml.WriteString(txtUrl.Text.ToString());
-        //        xml.WriteEndElement();
-        //        xml.WriteEndDocument();
-        //        xml.Close();
-        //        writer1.Formatting = Formatting.Indented;
-        //        xmldoc.Save(writer1);
-        //    }
-        //    XmlSerializer formatter = new XmlSerializer(typeof(MainWindow));
-        //    using (FileStream fs = new FileStream("Story.xml", FileMode.OpenOrCreate))
-        //    {
-        //        formatter.Serialize(fs, txtUrl);
-        //    }
-        //}
     }
 }
