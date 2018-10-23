@@ -34,17 +34,18 @@ namespace Browser
         public void Conn(string str)
         {
             str = txtUrl.Text.ToString();
-            var date = DateTime.Now;
+            string date = DateTime.Now.ToString();
             string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
-            MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
+            string insert = "insert into story_list.story(name,time) values('"+str+"','"+date+"')";
             MySqlConnection conn = new MySqlConnection(ConnectionString);
-            using (MySqlCommand cmd = new MySqlCommand(ConnectionString, conn))
+            MySqlCommand cmd = new MySqlCommand(insert, conn);
+            MySqlDataReader reader;
+            conn.Open();
+            reader = cmd.ExecuteReader();
+            foreach(string s in reader)
             {
-                conn.Open();
-                cmd.ExecuteReader();
-                cmd.CommandText = string.Format("insert into story_list.story(name,time) values('{0}','{1}')", str, date);
+                txtUrlcombo.Items.Add(s);
             }
-            conn.Close();
         }
 
         private bool IsUrlValid(string url)
