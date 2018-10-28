@@ -20,3 +20,6 @@ C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.dll
 C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\Google.Protobuf.xml
 C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.xml
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.csproj.CopyComplete
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\History\History.mdf
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\History\History_log.ldf
+C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser_Content.g.cs
