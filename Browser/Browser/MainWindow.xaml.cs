@@ -23,7 +23,6 @@ namespace Browser
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    [Serializable]
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -36,24 +35,17 @@ namespace Browser
         {
             str = txtUrl.Text.ToString();
             string date = DateTime.Now.ToString();
-            //string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
-            //string insert = "insert into story_list.story(name,time) values('"+str+"','"+date+"')";
-            //MySqlConnection conn = new MySqlConnection(ConnectionString);
-            //MySqlCommand cmd = new MySqlCommand(insert, conn);
-            //MySqlDataReader reader;
-            //conn.Open();
-            //reader = cmd.ExecuteReader();
-            //foreach(string s in reader)
-            //{
-            //    txtUrlcombo.Items.Add(s);
-            //}
-            string ConnectionString =
-                "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\dmitr\\source\repos\\Browser\\Browser\\History\\History.mdf;Integrated Security=True";
-            string insert = "insert into Table(Name,Date) values('@" + str + "','@" + date + "')";
-            SqlConnection conn = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand(insert);
+            string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
+            string insert = "insert into story_list.story(name,time) values('" + str + "','" + date + "')";
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand cmd = new MySqlCommand(insert, conn);
+            MySqlDataReader reader;
             conn.Open();
-            cmd.Connection = conn;
+            reader = cmd.ExecuteReader();
+            foreach (string s in reader)
+            {
+                txtUrlcombo.Items.Add(s);
+            }
         }
 
         private bool IsUrlValid(string url)
