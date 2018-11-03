@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("history/history.mdf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("history/history_log.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("history/dbo.table.sql")]
 
 

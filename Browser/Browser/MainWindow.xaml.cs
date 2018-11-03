@@ -16,7 +16,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using System.Data.SqlClient;
+using System.Data.SQLite;
+using System.IO;
 
 namespace Browser
 {
@@ -35,17 +36,13 @@ namespace Browser
         {
             str = txtUrl.Text.ToString();
             string date = DateTime.Now.ToString();
-            string ConnectionString = "Server=127.0.0.1;Port=3306;Uid=root;Password=1234;Database=story_list;";
-            string insert = "insert into story_list.story(name,time) values('" + str + "','" + date + "')";
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlCommand cmd = new MySqlCommand(insert, conn);
-            MySqlDataReader reader;
+            string ConnectionString = "Data Source = C:\\Users\\dmitr\\source\\repos\\Browser\\Browser\\History\\History.db";
+            string insert = "insert into story(name, date) values('" + str + "','" + date + "')";
+            SQLiteConnection conn = new SQLiteConnection(ConnectionString);
+            SQLiteCommand cmd = new SQLiteCommand(insert, conn);
             conn.Open();
-            reader = cmd.ExecuteReader();
-            foreach (string s in reader)
-            {
-                txtUrlcombo.Items.Add(s);
-            }
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            conn.Close();
         }
 
         private bool IsUrlValid(string url)

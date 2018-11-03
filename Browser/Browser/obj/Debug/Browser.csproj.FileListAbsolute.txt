@@ -20,3 +20,12 @@ C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.dll
 C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\Google.Protobuf.xml
 C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\MySql.Data.xml
 C:\Users\dmitr\source\repos\Browser\Browser\obj\Debug\Browser.csproj.CopyComplete
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\EntityFramework.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\System.Data.SQLite.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\EntityFramework.xml
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\System.Data.SQLite.xml
+C:\Users\dmitr\source\repos\Browser\Browser\bin\Debug\System.Data.SQLite.dll.config
