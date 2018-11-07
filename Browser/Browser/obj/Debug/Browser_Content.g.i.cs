@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("history/dbo.table.sql")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("xmlfile1.xml")]
 
 

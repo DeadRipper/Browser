@@ -20,7 +20,6 @@ namespace Browser
     /// <summary>
     /// Логика взаимодействия для History.xaml
     /// </summary>
-    [Serializable]
     public partial class History : Window
     {
         public History()

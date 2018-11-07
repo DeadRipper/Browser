@@ -14,9 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using System.Data.SQLite;
+using System.Xml;
 using System.IO;
 
 namespace Browser
@@ -32,23 +30,10 @@ namespace Browser
             wbProg.Navigate("http://www.google.com");
         }
 
-        public void Conn(string str)
-        {
-            str = txtUrl.Text.ToString();
-            string date = DateTime.Now.ToString();
-            string ConnectionString = "Data Source = C:\\Users\\dmitr\\source\\repos\\Browser\\Browser\\History\\History.db";
-            string insert = "insert into story(name, date) values('" + str + "','" + date + "')";
-            SQLiteConnection conn = new SQLiteConnection(ConnectionString);
-            SQLiteCommand cmd = new SQLiteCommand(insert, conn);
-            conn.Open();
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            conn.Close();
-        }
-
         private bool IsUrlValid(string url)
         {
             url = txtUrl.Text.ToString();
-            string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
+            string reg = @"^(http|https|ftp|)\//|[a-zA-Z0-9\-\.]+\.[a-zA-Z]([a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
             Regex regex = new Regex(reg, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return regex.IsMatch(url);
         }
@@ -63,14 +48,18 @@ namespace Browser
                     wbProg.Navigate(txtUrl.Text);
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
-                    Conn(txtUrl.Text.ToString());
+                    Create();
+                    foreach(var a in txtUrl.Text)
+                        Save();
                 }
                 else
                 {
                     wbProg.Navigate("http://" + txtUrl.Text + ".com");
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
-                    Conn(txtUrl.Text.ToString());
+                    Create();
+                    foreach (var a in txtUrl.Text)
+                        Save();
                 }
             }
 
@@ -115,6 +104,110 @@ namespace Browser
         {
             History wHistory = new History();
             wHistory.Show();
+        }
+
+        public void Create()
+        {
+            /*XmlWriter writer = XmlWriter.Create("Story.xml");
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Story");
+            writer.WriteStartElement("Link");
+            writer.WriteAttributeString("Time", DateTime.Now.ToString());
+            writer.WriteString(txtUrl.Text.ToString());
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Close();
+            XmlTextWriter writer = new XmlTextWriter("Story.xml", Encoding.UTF8);
+            XmlDocument document = new XmlDocument();
+            document.LoadXml("Story.xml");
+            XmlNode node = document.CreateNode("Link","Date","");
+            node.InnerText = txtUrl.Text.ToString();
+            XmlElement root = document.DocumentElement;
+            root.AppendChild(node);
+            document.Save("Story.xml");
+            XmlTextWriter writer = new XmlTextWriter("Story.xml", Encoding.UTF8);
+            writer.Formatting = Formatting.Indented;
+            writer.WriteStartElement("Story");
+            writer.WriteAttributeString("Date", DateTime.Now.ToString());
+            writer.WriteElementString("Link", txtUrl.Text.ToString());
+            writer.WriteFullEndElement();
+            writer.WriteEndElement();
+            writer.WriteWhitespace("\n");
+            writer.WriteRaw(txtUrl.Text.ToString() + DateTime.Now.ToString());
+            writer.Close();
+            if (File.Exists("Story.xml") == true)
+            {
+                XmlDocument document = new XmlDocument();
+                document.LoadXml("Story.xml");
+                XmlElement link = document.CreateElement("Link");
+                link.InnerText = txtUrl.Text.ToString();
+                XmlElement date = document.CreateElement("Date");
+                date.InnerText = DateTime.Now.ToString();
+                XmlElement root = document.DocumentElement;
+                root.AppendChild(link);
+                root.AppendChild(date);
+                document.Save("Story.xml");
+            }
+            else
+            {
+
+                XmlTextWriter writer = new XmlTextWriter("Story.xml", null);
+                XmlDocument document = new XmlDocument();
+                writer.WriteStartElement("Story");
+                writer.WriteElementString("Link", txtUrl.Text.ToString());
+                writer.WriteElementString("Date", DateTime.Now.ToString());
+                writer.WriteEndElement();
+                document.LoadXml("Story");
+                XmlElement link = document.CreateElement("Link");
+                link.InnerText = txtUrl.Text.ToString();
+                XmlElement date = document.CreateElement("Date");
+                date.InnerText = DateTime.Now.ToString();
+                XmlElement root = document.DocumentElement;
+                root.AppendChild(link);
+                root.AppendChild(date);
+                document.Save("Story.xml");
+                writer.Close();
+            }*/
+                XmlWriter writer = XmlWriter.Create("Story.xml");
+                writer.WriteStartElement("Story");
+                writer.WriteElementString("Link", null);//, txtUrl.Text.ToString());
+                writer.WriteElementString("Date", null);//DateTime.Now.ToString());
+                writer.WriteEndElement();
+                writer.Close();
+            //XmlDocument document = new XmlDocument();
+            //document.Load("Story.xml");
+            //XmlNode node = document.DocumentElement.FirstChild;
+            //XmlElement element = document.CreateElement("Story");
+            //element.SetAttribute("Link", txtUrl.Text.ToString());
+            //element.SetAttribute("Date", DateTime.Now.ToString());
+            //document.DocumentElement.InsertAfter(element, node);
+            //document.Save("Story.xml");
+            //BindData();
+            //XmlWriter writer = XmlWriter.Create("Story.xml");
+            //writer.WriteStartElement("Story");
+            //writer.WriteElementString("Link", txtUrl.Text.ToString());
+            //writer.WriteElementString("Date", DateTime.Now.ToString());
+            //writer.WriteEndElement();
+            //XmlDocument document = new XmlDocument();
+            //document.Load("Story.xml");
+            //XmlNode node = document.DocumentElement.FirstChild;
+            //XmlElement element = document.CreateElement("Story");
+            //element.SetAttribute("Link",txtUrl.Text.ToString());
+            //element.SetAttribute("Date", DateTime.Now.ToString());
+            //document.DocumentElement.InsertAfter(element, node);
+            //document.Save("Story.xml");
+        }
+
+        void Save()
+        {
+            XmlDocument document = new XmlDocument();
+            document.Load("Story.xml");
+            XmlNode node = document.DocumentElement.FirstChild;
+            XmlElement element = document.CreateElement("History");
+            element.SetAttribute("Link", txtUrl.Text.ToString());
+            element.SetAttribute("Date", DateTime.Now.ToString());
+            document.DocumentElement.InsertAfter(element, node);
+            document.Save("Story.xml");
         }
     }
 }

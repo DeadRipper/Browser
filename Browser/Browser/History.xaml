@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="History"
         Height="{Binding SystemParameters.PrimaryScreenheight}" 
-        Width="{Binding SystemParameters.PrimaryScreenheight}">
+        Width="{Binding SystemParameters.PrimaryScreenwidth}">
     <Grid Margin="0,3,0,0" Height="498" VerticalAlignment="Top">
         <ListBox x:Name="listbox" HorizontalAlignment="Left" Height="478" Margin="10,10,0,0" VerticalAlignment="Top" Width="740" SelectionChanged="listbox_SelectionChanged"/>
     </Grid>
