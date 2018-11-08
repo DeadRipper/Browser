@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using System.Xml;
 using System.IO;
+using Path = System.Windows.Shapes.Path;
 
 namespace Browser
 {
@@ -38,6 +39,14 @@ namespace Browser
             return regex.IsMatch(url);
         }
 
+        public string Method(string str)
+        {
+            List<string> list = new List<string>();
+            list.Add(str);
+            Save();
+            return str;
+        }
+
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
             History wHistory = new History();
@@ -49,8 +58,9 @@ namespace Browser
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
                     Create();
-                    foreach(var a in txtUrl.Text)
-                        Save();
+                    foreach(var s in txtUrl.Text)
+                        Method(txtUrl.Text);
+                    //Save();
                 }
                 else
                 {
@@ -58,8 +68,9 @@ namespace Browser
                     txtUrlcombo.Items.Add(txtUrl.Text);
                     wHistory.listbox.Items.Add(txtUrl.Text);
                     Create();
-                    foreach (var a in txtUrl.Text)
-                        Save();
+                    foreach (var s in txtUrl.Text)
+                        Method(txtUrl.Text);
+                    //Save();
                 }
             }
 
@@ -204,9 +215,12 @@ namespace Browser
             document.Load("Story.xml");
             XmlNode node = document.DocumentElement.FirstChild;
             XmlElement element = document.CreateElement("History");
-            element.SetAttribute("Link", txtUrl.Text.ToString());
-            element.SetAttribute("Date", DateTime.Now.ToString());
-            document.DocumentElement.InsertAfter(element, node);
+            foreach (var s in txtUrl.Text)
+            {
+                element.SetAttribute("Link", txtUrl.Text.ToString());
+                element.SetAttribute("Date", DateTime.Now.ToString());
+                document.DocumentElement.InsertAfter(element, node);
+            }
             document.Save("Story.xml");
         }
     }
