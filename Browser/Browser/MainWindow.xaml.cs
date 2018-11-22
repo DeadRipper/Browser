@@ -20,9 +20,6 @@ using Path = System.Windows.Shapes.Path;
 
 namespace Browser
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -39,38 +36,46 @@ namespace Browser
             return regex.IsMatch(url);
         }
 
-        public string Method(string str)
+        public void Create()
         {
-            List<string> list = new List<string>();
-            list.Add(str);
-            Save();
-            return str;
+            XmlTextWriter text = new XmlTextWriter("Story.xml", Encoding.UTF8);
+            text.WriteStartDocument();
+            text.WriteStartElement("Story");
+            text.WriteEndElement();
+            text.Close();
+
+        }
+
+        void Save()
+        {
+            string site = txtUrl.Text.ToString();
+            XmlDocument document = new XmlDocument();
+            document.Load("Story.xml");
+            XmlNode node = document.CreateElement("Story");
+            document.DocumentElement.AppendChild(node);
+            XmlAttribute attribute = document.CreateAttribute("Date");
+            attribute.Value = DateTime.Now.ToString();
+            node.Attributes.Append(attribute);
+            XmlNode subnode = document.CreateElement("Site");
+            subnode.InnerText = site;
+            node.AppendChild(subnode);
+            document.Save("Story.xml");
         }
 
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
-            History wHistory = new History();
             if (e.Key == Key.Enter)
             {
-                if (IsUrlValid(txtUrl.Text) == true)
+                wbProg.Navigate("http://" + txtUrl.Text + ".com");
+                Create();
+                if (File.Exists("Story.xml"))
                 {
-                    wbProg.Navigate(txtUrl.Text);
-                    txtUrlcombo.Items.Add(txtUrl.Text);
-                    wHistory.listbox.Items.Add(txtUrl.Text);
-                    Create();
-                    foreach(var s in txtUrl.Text)
-                        Method(txtUrl.Text);
-                    //Save();
+                    Save();
                 }
                 else
                 {
-                    wbProg.Navigate("http://" + txtUrl.Text + ".com");
-                    txtUrlcombo.Items.Add(txtUrl.Text);
-                    wHistory.listbox.Items.Add(txtUrl.Text);
                     Create();
-                    foreach (var s in txtUrl.Text)
-                        Method(txtUrl.Text);
-                    //Save();
+                    Save();
                 }
             }
 
@@ -115,113 +120,6 @@ namespace Browser
         {
             History wHistory = new History();
             wHistory.Show();
-        }
-
-        public void Create()
-        {
-            /*XmlWriter writer = XmlWriter.Create("Story.xml");
-            writer.WriteStartDocument();
-            writer.WriteStartElement("Story");
-            writer.WriteStartElement("Link");
-            writer.WriteAttributeString("Time", DateTime.Now.ToString());
-            writer.WriteString(txtUrl.Text.ToString());
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Close();
-            XmlTextWriter writer = new XmlTextWriter("Story.xml", Encoding.UTF8);
-            XmlDocument document = new XmlDocument();
-            document.LoadXml("Story.xml");
-            XmlNode node = document.CreateNode("Link","Date","");
-            node.InnerText = txtUrl.Text.ToString();
-            XmlElement root = document.DocumentElement;
-            root.AppendChild(node);
-            document.Save("Story.xml");
-            XmlTextWriter writer = new XmlTextWriter("Story.xml", Encoding.UTF8);
-            writer.Formatting = Formatting.Indented;
-            writer.WriteStartElement("Story");
-            writer.WriteAttributeString("Date", DateTime.Now.ToString());
-            writer.WriteElementString("Link", txtUrl.Text.ToString());
-            writer.WriteFullEndElement();
-            writer.WriteEndElement();
-            writer.WriteWhitespace("\n");
-            writer.WriteRaw(txtUrl.Text.ToString() + DateTime.Now.ToString());
-            writer.Close();
-            if (File.Exists("Story.xml") == true)
-            {
-                XmlDocument document = new XmlDocument();
-                document.LoadXml("Story.xml");
-                XmlElement link = document.CreateElement("Link");
-                link.InnerText = txtUrl.Text.ToString();
-                XmlElement date = document.CreateElement("Date");
-                date.InnerText = DateTime.Now.ToString();
-                XmlElement root = document.DocumentElement;
-                root.AppendChild(link);
-                root.AppendChild(date);
-                document.Save("Story.xml");
-            }
-            else
-            {
-
-                XmlTextWriter writer = new XmlTextWriter("Story.xml", null);
-                XmlDocument document = new XmlDocument();
-                writer.WriteStartElement("Story");
-                writer.WriteElementString("Link", txtUrl.Text.ToString());
-                writer.WriteElementString("Date", DateTime.Now.ToString());
-                writer.WriteEndElement();
-                document.LoadXml("Story");
-                XmlElement link = document.CreateElement("Link");
-                link.InnerText = txtUrl.Text.ToString();
-                XmlElement date = document.CreateElement("Date");
-                date.InnerText = DateTime.Now.ToString();
-                XmlElement root = document.DocumentElement;
-                root.AppendChild(link);
-                root.AppendChild(date);
-                document.Save("Story.xml");
-                writer.Close();
-            }*/
-                XmlWriter writer = XmlWriter.Create("Story.xml");
-                writer.WriteStartElement("Story");
-                writer.WriteElementString("Link", null);//, txtUrl.Text.ToString());
-                writer.WriteElementString("Date", null);//DateTime.Now.ToString());
-                writer.WriteEndElement();
-                writer.Close();
-            //XmlDocument document = new XmlDocument();
-            //document.Load("Story.xml");
-            //XmlNode node = document.DocumentElement.FirstChild;
-            //XmlElement element = document.CreateElement("Story");
-            //element.SetAttribute("Link", txtUrl.Text.ToString());
-            //element.SetAttribute("Date", DateTime.Now.ToString());
-            //document.DocumentElement.InsertAfter(element, node);
-            //document.Save("Story.xml");
-            //BindData();
-            //XmlWriter writer = XmlWriter.Create("Story.xml");
-            //writer.WriteStartElement("Story");
-            //writer.WriteElementString("Link", txtUrl.Text.ToString());
-            //writer.WriteElementString("Date", DateTime.Now.ToString());
-            //writer.WriteEndElement();
-            //XmlDocument document = new XmlDocument();
-            //document.Load("Story.xml");
-            //XmlNode node = document.DocumentElement.FirstChild;
-            //XmlElement element = document.CreateElement("Story");
-            //element.SetAttribute("Link",txtUrl.Text.ToString());
-            //element.SetAttribute("Date", DateTime.Now.ToString());
-            //document.DocumentElement.InsertAfter(element, node);
-            //document.Save("Story.xml");
-        }
-
-        void Save()
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load("Story.xml");
-            XmlNode node = document.DocumentElement.FirstChild;
-            XmlElement element = document.CreateElement("History");
-            foreach (var s in txtUrl.Text)
-            {
-                element.SetAttribute("Link", txtUrl.Text.ToString());
-                element.SetAttribute("Date", DateTime.Now.ToString());
-                document.DocumentElement.InsertAfter(element, node);
-            }
-            document.Save("Story.xml");
         }
     }
 }
