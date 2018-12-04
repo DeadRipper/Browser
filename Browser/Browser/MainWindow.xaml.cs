@@ -14,10 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using System.Data.SQLite;
 using System.IO;
+using System.Xml;
+using System.Xml.XmlConfiguration;
 
 namespace Browser
 {
@@ -32,46 +31,71 @@ namespace Browser
             wbProg.Navigate("http://www.google.com");
         }
 
-        public void Conn(string str)
-        {
-            str = txtUrl.Text.ToString();
-            string date = DateTime.Now.ToString();
-            string ConnectionString = "Data Source = C:\\Users\\dmitr\\source\\repos\\Browser\\Browser\\History\\History.db";
-            string insert = "insert into story(name, date) values('" + str + "','" + date + "')";
-            SQLiteConnection conn = new SQLiteConnection(ConnectionString);
-            SQLiteCommand cmd = new SQLiteCommand(insert, conn);
-            conn.Open();
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            conn.Close();
-        }
+		public void XmlStory(string val)
+		{
+			val = txtUrl.Text.ToString();
+				//using (XmlTextWriter writer1 = new XmlTextWriter("Story.xml", null))
+				//{
+				//	XmlDocument xDoc = new XmlDocument();
+				//	xDoc.Load("Story.xml");
+				//	XmlElement xRoot = xDoc.DocumentElement;
+				//	// создаем новый элемент user
+				//	XmlElement story = xDoc.CreateElement("Story");
+				//	// создаем атрибут name
+				//	XmlAttribute site = xDoc.CreateAttribute("today");
+				//	// создаем элементы company и age
+				//	XmlElement date = xDoc.CreateElement("date");
+				//	XmlElement ageElem = xDoc.CreateElement("age");
+				//	// создаем текстовые значения для элементов и атрибута
+				//	XmlText nameText = xDoc.CreateTextNode(val);
+				//	XmlText companyText = xDoc.CreateTextNode(DateTime.Now.ToString());
 
-        private bool IsUrlValid(string url)
-        {
-            url = txtUrl.Text.ToString();
-            string reg = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$^[.com|.ua|.ru]";
-            Regex regex = new Regex(reg, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            return regex.IsMatch(url);
-        }
+				//	//добавляем узлы
+				//	site.AppendChild(nameText);
+				//	date.AppendChild(companyText);
+				//	story.Attributes.Append(site);
+				//	story.AppendChild(date);
+				//	xRoot.AppendChild(story);
+				//	xDoc.Save("Story.xml");
+				//using (XmlTextWriter writer1 = new XmlTextWriter("Story.xml", null))
+				//{
+				//	XmlDocument xmldoc = new XmlDocument();
+				//	XmlWriter xml = XmlWriter.Create("Story.xml");
+				//	xml.WriteStartDocument();
+				//	xml.WriteStartElement("story");
+				//	xml.WriteStartElement("today");
+				//	xml.WriteAttributeString("date", DateTime.Now.ToString());
+				//	xml.WriteString(txtUrl.Text.ToString());
+				//	xml.WriteEndElement();
+				//	xml.WriteEndDocument();
+				//	xml.Close();
+				//	writer1.Formatting = Formatting.Indented;
+				//	xmldoc.Save(writer1);
+				//}
+
+			XmlTextWriter textWriter = new XmlTextWriter("Story.xml", Encoding.UTF8);
+			XmlDocument document = new XmlDocument();
+			textWriter.WriteStartDocument();
+			textWriter.WriteStartElement("Story");
+			XmlNode node = document.CreateElement("Day");
+			document.DocumentElement.AppendChild(node);
+			XmlAttribute attribute = document.CreateAttribute("Site");
+			attribute.Value = DateTime.Now.ToString();
+			node.Attributes.Append(attribute);
+			XmlNode subnode = document.CreateElement("Site");
+			subnode.InnerText = val;
+			node.AppendChild(subnode);
+			document.Save("Story.xml");
+			textWriter.WriteEndElement();
+			textWriter.Close();
+		}
 
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
         {
-            History wHistory = new History();
             if (e.Key == Key.Enter)
             {
-                if (IsUrlValid(txtUrl.Text) == true)
-                {
-                    wbProg.Navigate(txtUrl.Text);
-                    txtUrlcombo.Items.Add(txtUrl.Text);
-                    wHistory.listbox.Items.Add(txtUrl.Text);
-                    Conn(txtUrl.Text.ToString());
-                }
-                else
-                {
-                    wbProg.Navigate("http://" + txtUrl.Text + ".com");
-                    txtUrlcombo.Items.Add(txtUrl.Text);
-                    wHistory.listbox.Items.Add(txtUrl.Text);
-                    Conn(txtUrl.Text.ToString());
-                }
+				wbProg.Navigate("http://" + txtUrl.Text + ".com");
+				XmlStory(txtUrl.Text);
             }
 
         }
@@ -109,12 +133,6 @@ namespace Browser
         private void GoToPage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             wbProg.Navigate(txtUrl.Text);
-        }
-
-        private void story_button_Click(object sender, RoutedEventArgs e)
-        {
-            History wHistory = new History();
-            wHistory.Show();
         }
     }
 }

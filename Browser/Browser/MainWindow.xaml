@@ -23,7 +23,6 @@
             <Button Command="NavigationCommands.GoToPage"></Button>
             <TextBox x:Name="textbox1" Height="26" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
             <Separator />
-            <Button x:Name="story_button" Height="26" VerticalAlignment="Top" Width="43" Content="Story" Click="story_button_Click"></Button>
         </ToolBar>
         <WebBrowser Name="wbProg" Navigating="wbProg_Navigating"></WebBrowser>
     </DockPanel>
