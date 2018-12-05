@@ -34,60 +34,29 @@ namespace Browser
 		public void XmlStory(string val)
 		{
 			val = txtUrl.Text.ToString();
-				//using (XmlTextWriter writer1 = new XmlTextWriter("Story.xml", null))
-				//{
-				//	XmlDocument xDoc = new XmlDocument();
-				//	xDoc.Load("Story.xml");
-				//	XmlElement xRoot = xDoc.DocumentElement;
-				//	// создаем новый элемент user
-				//	XmlElement story = xDoc.CreateElement("Story");
-				//	// создаем атрибут name
-				//	XmlAttribute site = xDoc.CreateAttribute("today");
-				//	// создаем элементы company и age
-				//	XmlElement date = xDoc.CreateElement("date");
-				//	XmlElement ageElem = xDoc.CreateElement("age");
-				//	// создаем текстовые значения для элементов и атрибута
-				//	XmlText nameText = xDoc.CreateTextNode(val);
-				//	XmlText companyText = xDoc.CreateTextNode(DateTime.Now.ToString());
-
-				//	//добавляем узлы
-				//	site.AppendChild(nameText);
-				//	date.AppendChild(companyText);
-				//	story.Attributes.Append(site);
-				//	story.AppendChild(date);
-				//	xRoot.AppendChild(story);
-				//	xDoc.Save("Story.xml");
-				//using (XmlTextWriter writer1 = new XmlTextWriter("Story.xml", null))
-				//{
-				//	XmlDocument xmldoc = new XmlDocument();
-				//	XmlWriter xml = XmlWriter.Create("Story.xml");
-				//	xml.WriteStartDocument();
-				//	xml.WriteStartElement("story");
-				//	xml.WriteStartElement("today");
-				//	xml.WriteAttributeString("date", DateTime.Now.ToString());
-				//	xml.WriteString(txtUrl.Text.ToString());
-				//	xml.WriteEndElement();
-				//	xml.WriteEndDocument();
-				//	xml.Close();
-				//	writer1.Formatting = Formatting.Indented;
-				//	xmldoc.Save(writer1);
-				//}
-
-			XmlTextWriter textWriter = new XmlTextWriter("Story.xml", Encoding.UTF8);
 			XmlDocument document = new XmlDocument();
-			textWriter.WriteStartDocument();
-			textWriter.WriteStartElement("Story");
-			XmlNode node = document.CreateElement("Day");
-			document.DocumentElement.AppendChild(node);
-			XmlAttribute attribute = document.CreateAttribute("Site");
-			attribute.Value = DateTime.Now.ToString();
-			node.Attributes.Append(attribute);
-			XmlNode subnode = document.CreateElement("Site");
-			subnode.InnerText = val;
-			node.AppendChild(subnode);
+			XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "utf-8", null);
+			document.AppendChild(declaration);
+
+			XmlComment comment = document.CreateComment("StoryDatabase");
+			document.AppendChild(comment);
+
+			XmlElement element = document.CreateElement("BrowserData");
+			document.AppendChild(element);
+			XmlElement ElementRow = document.CreateElement("row");
+			element.AppendChild(ElementRow);
+
+			XmlElement xml = document.CreateElement("Field");
+			xml.SetAttribute("Data", "Site");
+			xml.InnerText = val;
+			ElementRow.AppendChild(xml);
+
+			XmlElement element1 = document.CreateElement("Field");
+			element1.SetAttribute("Data", "Time");
+			element1.InnerText = DateTime.Now.ToString();
+			ElementRow.AppendChild(element1);
+
 			document.Save("Story.xml");
-			textWriter.WriteEndElement();
-			textWriter.Close();
 		}
 
         public void txtUrl_KeyUp(object sender, KeyEventArgs e)
